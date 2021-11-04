@@ -1,7 +1,5 @@
-main .section-wrapper:not(.hero-container) {
-  width: 80vw;
-  max-width: 600px;
-  margin: 0 auto;
+.section-wrapper.hero-container {
+    margin-bottom: 10px;
 }
 
 .hero {
