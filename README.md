@@ -1,9 +1,9 @@
-# Your Project's Title...
-Your project's description...
+# Chefkoch Helix Playground
+Playing with Project Helix
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.hlx3.page/
-- Live: https://main--{repo}--{owner}.hlx.live/
+- Preview: https://main--helix-chefkoch--mhaack.hlx3.page/
+- Live: https://main--helix-chefkoch--mhaack.hlx.live/
 
 ## Installation
 

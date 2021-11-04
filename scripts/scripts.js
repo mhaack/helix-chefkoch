@@ -355,6 +355,7 @@ async function decoratePage(win = window) {
       addFavIcon('/favicon.svg');
     });
   }
+  console.log('page decoration done');
 }
 
 decoratePage(window);
