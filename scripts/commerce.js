@@ -54,7 +54,10 @@ export async function loadProducts(productSkus) {
         body: JSON.stringify({ query: getProductsQuery(productSkus) })
     };
 
-    const products = await fetch(`http://localhost:3002/graphql`, options)
+    const products = await fetch(
+        `https://adobeioruntime.net/api/v1/web/mbecker/default/io-proxy.http/graphql`,
+        options
+    )
         .then((res) => res.json())
         .then((data) => {
             //console.log(data.data.products);
