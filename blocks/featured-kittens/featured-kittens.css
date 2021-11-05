@@ -1,0 +1,20 @@
+.featured-kittens {
+    border: 1px lightgray solid;
+    margin: 10px auto;
+}
+
+.featured-kittens > div {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 2fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.featured-kittens img {
+    object-fit: fill;
+    width: 98%;
+    height: 98%;
+}
