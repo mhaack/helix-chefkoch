@@ -18,20 +18,14 @@ export default function decorate($block) {
     const productSkus = [];
 
     $block.querySelectorAll(':scope>div').forEach(($producdCard) => {
-        console.log($producdCard);
         $producdCard.classList.add('product-card');
         const sku = $producdCard.firstElementChild.innerText;
         $producdCard.remove();
         productSkus.push(sku);
     });
 
-    console.log(productSkus);
-    console.log($block);
-
     loadProducts(productSkus).then((products) =>
         products.forEach((product) => {
-            // build product card
-
             const $producdCard = createTag('div', { class: 'product-card' });
             $block.appendChild($producdCard);
 

@@ -10,35 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-export async function loadProduct(productSku) {
-    const getProductsQuery = (sku) =>
-        `query { products(filter: { sku: {eq: "${sku}" } }) { items { __typename name price_range { minimum_price { final_price { currency value } } } thumbnail { url label } } } }`;
-
-    const options = {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-
-        body: JSON.stringify({
-            query: getProductsQuery(productSku)
-        })
-    };
-
-    const products = await fetch(`https://adobeioruntime.net/api/v1/web/mbecker/default/io-proxy.http/graphql`, options)
-        .then((res) => res.json())
-        .then((data) => {
-            //console.log(data.data.products);
-            return data.data.products.items[0];
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-
-    console.log(products);
-    return products;
-}
-
 export async function loadProducts(productSkus) {
     const getProductsQuery = (skus) =>
         `query { products(filter: { sku: {in: ${JSON.stringify(
@@ -69,6 +40,5 @@ export async function loadProducts(productSkus) {
             console.error('Error:', error);
         });
 
-    console.log(products);
     return products;
 }
