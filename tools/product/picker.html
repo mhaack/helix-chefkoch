@@ -6,11 +6,6 @@
     <title>Commerce Product Picker</title>
     <link rel="stylesheet" type="text/css" crossorigin
         href="https://static-cif.adobeaemcloud.com/src.stable.latest.css" />
-    <script type="application/javascript">
-        let configs = [];
-        configs.push(`{"instanceUrl":"https://adobeioruntime.net/api/v1/web/mbecker/default/io-proxy.http/graphql","rootCategory":"Mg==","storeView":"default","enableUIDSupport":"true"}`);
-    </script>
-
     <style type="text/css">
         .react-spectrum-provider {
             margin: 50px;
@@ -24,8 +19,14 @@
     <product-field name="./product" placeholder="Product SKU" selection-id="combinedSku" multiple
         filter="folderOrProductOrVariant" aria-required="true" configs="<%= configs %>">
     </product-field>
+    <script type="application/javascript">
+        let configs = [];
+        configs.push({ "instanceUrl": "https://adobeioruntime.net/api/v1/web/mbecker/default/io-proxy.http/graphql", "rootCategory": "Mg==", "storeView": "default", "enableUIDSupport": "true" });
+        document.getElementsByTagName("product-field")[0].setAttribute("configs", JSON.stringify(configs))
+    </script>
 
     <script type="application/javascript" crossorigin async="true"
         src="https://static-cif.adobeaemcloud.com/src.stable.latest.js"></script>
 </body>
+
 </html>
