@@ -21,8 +21,7 @@
       // TEMPLATES --------------------------------------------------------------------
       {
         id: 'picker',
-        condition: (s) => s.isEditor()
-          && (s.location.pathname.includes('/:w:/') || s.location.href.includes('doc.aspx?')),
+        condition: (s) => s.isEditor(),
         button: {
           text: 'Product picker',
           action: (_, s) => {
