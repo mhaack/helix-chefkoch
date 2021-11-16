@@ -62,11 +62,11 @@
 
             var tableBody = products.querySelector("table tbody");
             var row = createTag("tr", { id: "p-" + value, class: "spectrum-Table-row" });
-            var cellSku = createTag("td");
+            var cellSku = createTag("td", {class: "spectrum-Table-cell"});
             cellSku.innerHTML = value;
-            var cellName = createTag("td");
+            var cellName = createTag("td",  { class: "spectrum-Table-cell" });
             cellName.innerHTML = "Product Name goes here"
-            var cellImage = createTag("td");
+            var cellImage = createTag("td",  { class: "spectrum-Table-cell" });
             cellImage.innerHTML = "Product Asset goes here"
             row.appendChild(cellSku);
             row.appendChild(cellName);
