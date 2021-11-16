@@ -56,7 +56,6 @@
 
         function handleAddValue(event) {
             var value = event.detail.value;
-            var target = event.target;
 
             var products = document.querySelector("#products");
             products.style.display = "block";
@@ -77,8 +76,6 @@
 
         function handleRemoveValue(event) {
             var value = event.detail.value;
-            var target = event.target;
-
             var products = document.querySelector("#products");
             var productRow = products.querySelector("table tbody #p-" + value);
             productRow.remove();
