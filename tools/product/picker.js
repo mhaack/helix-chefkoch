@@ -97,6 +97,17 @@ const copy = () => {
 
   clear();
 
+  if (selection.count === 0) return;
+
+  // 1 product -> card
+  let blockName = 'Product Card';
+  if (selection.count > 1) {
+    // n products -> grid
+    blockName = 'Product Grid';
+  }
+
+  document.querySelector('#copybuffer #blockName').innerHTML = blockName;
+
   for(let p in selection.items) {
     insertProductInCopyBuffer(p, selection.items[p]);
   }
