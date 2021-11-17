@@ -10,6 +10,19 @@
         .react-spectrum-provider {
             margin: 50px;
         }
+
+        .hidden {
+            display: none;
+        }
+
+        .offscreen {
+            position: absolute;
+            top: -1000px;
+        }
+
+        .image-preview {
+            max-height: 40px;
+        }
     </style>
 </head>
 
@@ -33,7 +46,11 @@
             <tbody class="spectrum-Table-body">
             </tbody>
         </table>
+        <br>
+        <button id="copy" class="hidden spectrum-Button spectrum-Button--cta">Copy</button>
     </div>
+
+    <textarea class="offscreen" id="copybuffer"></textarea>
 
     <script type="application/javascript">
         let configs = [];
