@@ -36,7 +36,7 @@ function removeFromSelection(sku) {
   }
 }
 
-const IMG_EXPORT_WIDTH = 180;
+const IMG_EXPORT_WIDTH = 50;
 
 function insertProductInCopyBuffer(sku, product) {
   const { name, imgSrc } = product;
@@ -105,12 +105,52 @@ const copy = () => {
   copyHTMLToClipboard(div.innerHTML);
 }
 
-function handleAddValue(event) {
+async function getProductData(sku) {
+  // TODO find better solution getting data from product-field webcomponent
+  const res = await fetch('https://adobeioruntime.net/api/v1/web/mbecker/default/io-proxy.http/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+        query productBySku($sku: String!) {
+          products(pageSize: 1, filter: { sku: { eq: $sku } }) {
+              items {
+                  __typename
+                  sku
+                  name
+                  thumbnail {
+                      url
+                  }
+              }
+          }
+      }
+      `,
+      variables: {
+        sku
+      },
+    }),
+  });
+
+  if (res.ok) {
+    const json = await res.json();
+    const product = json?.data?.products?.items[0];
+    if (product) {
+      return {
+        name: product.name,
+        imgSrc: product.thumbnail.url,
+      }
+    }
+  } 
+
+  return null;
+}
+
+async function handleAddValue(event) {
   var sku = event.detail.value;
 
-  // TODO find data
-  const name = 'Product Name goes here';
-  const imgSrc = 'http://mystage1-amspro120.amscommerce.cloud/media/catalog/product/cache/8735dd21982cf027014173d1affcf80c/v/d/vd09-pe_main_4.jpg';
+  const { name, imgSrc } = await getProductData(sku);
 
   addToSelection(sku, {
     name,
