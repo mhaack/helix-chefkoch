@@ -36,6 +36,75 @@ function removeFromSelection(sku) {
   }
 }
 
+const IMG_EXPORT_WIDTH = 180;
+
+function insertProductInCopyBuffer(sku, product) {
+  const { name, imgSrc } = product;
+
+  const tbody = document.querySelector('#copybuffer tbody');
+        
+  const row = document.createElement('tr');
+  tbody.append(row);
+
+  const imgCell = document.createElement('td');
+  imgCell.style.border = '1px solid black';
+  imgCell.style.textAlign = 'center';
+  imgCell.style.verticalAlign = 'middle';
+
+  row.append(imgCell);
+  const img = document.createElement('img');
+  img.src = imgSrc;
+  img.alt = name;
+  img.width = IMG_EXPORT_WIDTH;
+
+  imgCell.append(img);
+
+  const skuCell = document.createElement('td');
+  skuCell.style.border = '1px solid black';
+  skuCell.style.textAlign = 'left';
+  skuCell.style.verticalAlign = 'middle';
+  skuCell.innerHTML = sku;
+  row.append(skuCell);
+  
+  const nameCell = document.createElement('td');
+  nameCell.style.border = '1px solid black';
+  nameCell.style.textAlign = 'left';
+  nameCell.style.verticalAlign = 'middle';
+  nameCell.innerHTML = name;
+  row.append(nameCell);
+
+  img.height = (IMG_EXPORT_WIDTH / img.naturalWidth) * img.naturalHeight;
+}
+
+const copyHTMLToClipboard = (html) => {
+  const callback = (e) => {
+    e.clipboardData.setData('text/html', html);
+    e.clipboardData.setData('text/plain', html);
+    e.preventDefault();
+  };
+
+  document.addEventListener('copy', callback);
+  document.execCommand('copy');
+  document.removeEventListener('copy', callback);
+};
+
+const clear = () => {
+  const tbody = document.querySelector('#copybuffer tbody');
+  tbody.innerHTML = '';
+}
+
+const copy = () => {
+
+  clear();
+
+  for(let p in selection.items) {
+    insertProductInCopyBuffer(p, selection.items[p]);
+  }
+
+  const div = document.getElementById('copybuffer');
+  copyHTMLToClipboard(div.innerHTML);
+}
+
 function handleAddValue(event) {
   var sku = event.detail.value;
 
@@ -53,16 +122,17 @@ function handleAddValue(event) {
 
   var tableBody = products.querySelector('table tbody');
   var row = createTag('tr', { id: 'p-' + sku, class: 'spectrum-Table-row' });
+  var cellImage = createTag('td',  { class: 'spectrum-Table-cell' });
+  var img = createTag('img', { src: imgSrc, class: 'image-preview' });
+  cellImage.appendChild(img);
   var cellSku = createTag('td', {class: 'spectrum-Table-cell'});
   cellSku.innerHTML = sku;
   var cellName = createTag('td',  { class: 'spectrum-Table-cell' });
   cellName.innerHTML = name;
-  var cellImage = createTag('td',  { class: 'spectrum-Table-cell' });
-  var img = createTag('img', { src: imgSrc, class: 'image-preview' });
-  cellImage.appendChild(img);
+
+  row.appendChild(cellImage);
   row.appendChild(cellSku);
   row.appendChild(cellName);
-  row.appendChild(cellImage);
   tableBody.appendChild(row);
 }
 
@@ -85,4 +155,5 @@ export function init() {
   document.querySelector('#products').addEventListener('cif:add-value', handleAddValue);
   document.querySelector('#products').addEventListener('cif:remove-value', handleRemoveValue);
   copyButton = document.querySelector('#copy');
+  copyButton.addEventListener('click', copy);
 }
