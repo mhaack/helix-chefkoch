@@ -19,9 +19,11 @@ export default function decorate($block) {
 
     $block.querySelectorAll(':scope>div').forEach(($producdCard) => {
         $producdCard.classList.add('product-card');
-        const sku = $producdCard.firstElementChild.innerText;
-        $producdCard.remove();
+
+        const sku = $producdCard.firstElementChild.nextElementSibling.textContent;
         productSkus.push(sku);
+
+        $producdCard.remove();
     });
 
     loadProducts(productSkus).then((products) =>
