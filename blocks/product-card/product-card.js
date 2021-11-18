@@ -11,35 +11,26 @@
  */
 /* global */
 
-import { createTag, formatPrice } from '../../scripts/helpers.js';
-import { loadProducts } from '../../scripts/commerce.js';
+import {
+    loadProducts,
+    loadProductMappings,
+    getProductPageUrl,
+    createProductCard
+} from '../../scripts/commerce.js';
 
 export default function decorate($block) {
     $block.querySelectorAll(':scope>div').forEach(($producdCard) => {
-        const sku = $producdCard.firstElementChild.nextElementSibling.textContent;
+        const sku =
+            $producdCard.firstElementChild.nextElementSibling.textContent;
         $producdCard.innerHTML = '';
 
-        // get product data
         loadProducts(sku).then((product) => {
-            // build product card
-            const $imageDiv = createTag('div', { class: 'card-image' });
-            const image = product.thumbnail;
-            const $productImage = createTag('img', {
-                src: image.url,
-                alt: image.label
+            loadProductMappings().then((mappings) => {
+                $producdCard.innerHTML = createProductCard(
+                    product,
+                    getProductPageUrl(product, mappings)
+                ).innerHTML;
             });
-            $imageDiv.appendChild($productImage);
-            $producdCard.appendChild($imageDiv);
-
-            const $contentDiv = createTag('div', { class: 'card-content' });
-            const $productName = createTag('h2', { class: 'name' });
-            $productName.innerText = product.name;
-            $contentDiv.appendChild($productName);
-            const $productPrice = createTag('p', { class: 'price' });
-            const price = product.price_range.minimum_price.final_price;
-            $productPrice.innerText = formatPrice(price.value, price.currency);
-            $contentDiv.appendChild($productPrice);
-            $producdCard.appendChild($contentDiv);
         });
     });
 }

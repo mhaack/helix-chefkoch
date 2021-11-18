@@ -10,11 +10,25 @@
  * governing permissions and limitations under the License.
  */
 
+import { createTag, formatPrice } from './helpers.js';
+
+const PDP_URL_Template = `/products?url_key=`;
+
+export function getProductPageUrl(product, mappings) {
+    const productPageMapping = mappings.find((mapping) => {
+        return mapping.sku === product.sku;
+    });
+
+    return productPageMapping != null
+        ? productPageMapping.path
+        : PDP_URL_Template + product.url_key;
+}
+
 export async function loadProducts(productSkus) {
     const getProductsQuery = (skus) =>
         `query { products(filter: { sku: {in: ${JSON.stringify(
             productSkus
-        )} } }) { items { __typename name price_range { minimum_price { final_price { currency value } } } thumbnail { url label } } } }`;
+        )} } }) { items { __typename name sku url_key price_range { minimum_price { final_price { currency value } } } thumbnail { url label } } } }`;
 
     const options = {
         method: 'post',
@@ -41,4 +55,50 @@ export async function loadProducts(productSkus) {
         });
 
     return products;
+}
+
+export async function loadProductMappings() {
+    const options = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    const mappings = await fetch(`/products.json`, options)
+        .then((res) => res.json())
+        .then((data) => {
+            return data.data;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+    return mappings;
+}
+
+// build product card
+export function createProductCard(product, pdpUrl) {
+    const $producdCard = createTag('div', { class: 'product-card' });
+    const $productPageHref = createTag('a', { href: pdpUrl });
+    $producdCard.appendChild($productPageHref);
+
+    const $imageDiv = createTag('div', { class: 'card-image' });
+    const image = product.thumbnail;
+    const $productImage = createTag('img', {
+        src: image.url,
+        alt: image.label
+    });
+    $imageDiv.appendChild($productImage);
+    $productPageHref.appendChild($imageDiv);
+
+    const $contentDiv = createTag('div', { class: 'card-content' });
+    const $productName = createTag('h2', { class: 'name' });
+    $productName.innerText = product.name;
+    $contentDiv.appendChild($productName);
+    const $productPrice = createTag('p', { class: 'price' });
+    const price = product.price_range.minimum_price.final_price;
+    $productPrice.innerText = formatPrice(price.value, price.currency);
+    $contentDiv.appendChild($productPrice);
+    $productPageHref.appendChild($contentDiv);
+
+    return $producdCard;
 }
