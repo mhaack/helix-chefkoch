@@ -36,6 +36,33 @@ function removeFromSelection(sku) {
   }
 }
 
+function addToPreview(sku, product) {
+  const productTable = document.querySelector('#products');
+  productTable.style.display = 'block';
+
+  const cellImage = createTag('td', { class: 'spectrum-Table-cell' });
+  const img = createTag('img', { src: product.imgSrc, class: 'image-preview' });
+  cellImage.appendChild(img);
+  const cellSku = createTag('td', { class: 'spectrum-Table-cell' });
+  cellSku.innerHTML = sku;
+  const cellName = createTag('td', { class: 'spectrum-Table-cell' });
+  cellName.innerHTML = product.name;
+
+  const row = createTag('tr', { id: 'p-' + sku, class: 'spectrum-Table-row' });
+  row.appendChild(cellImage);
+  row.appendChild(cellSku);
+  row.appendChild(cellName);
+  
+  const tableBody = productTable.querySelector('table tbody');
+  tableBody.appendChild(row);
+}
+
+function removeFromPreview(sku) {
+  const productTable = document.querySelector('#products');
+  const productRow = productTable.querySelector('table tbody #p-' + sku);
+  productRow.remove();
+}
+
 const IMG_EXPORT_WIDTH = 50;
 
 function insertProductInCopyBuffer(sku, product) {
@@ -170,40 +197,18 @@ async function handleAddValue(event) {
     name,
     imgSrc
   });
-
-  var products = document.querySelector('#products');
-  products.style.display = 'block';
-
-  var tableBody = products.querySelector('table tbody');
-  var row = createTag('tr', { id: 'p-' + sku, class: 'spectrum-Table-row' });
-  var cellImage = createTag('td',  { class: 'spectrum-Table-cell' });
-  var img = createTag('img', { src: imgSrc, class: 'image-preview' });
-  cellImage.appendChild(img);
-  var cellSku = createTag('td', {class: 'spectrum-Table-cell'});
-  cellSku.innerHTML = sku;
-  var cellName = createTag('td',  { class: 'spectrum-Table-cell' });
-  cellName.innerHTML = name;
-
-  row.appendChild(cellImage);
-  row.appendChild(cellSku);
-  row.appendChild(cellName);
-  tableBody.appendChild(row);
+  addToPreview(sku, {
+    name,
+    imgSrc
+  });  
 }
 
 function handleRemoveValue(event) {
   var sku = event.detail.value;
 
   removeFromSelection(sku);
-
-  var products = document.querySelector('#products');
-  var productRow = products.querySelector('table tbody #p-' + sku);
-  productRow.remove();
+  removeFromPreview(sku);
 }
-
-
-// document.querySelector('#products').addEventListener('cif:update-value', () => {
-//     console.log('Product - change')
-// });
 
 export function init() {
   document.querySelector('#products').addEventListener('cif:add-value', handleAddValue);
