@@ -76,16 +76,13 @@ function insertProductInCopyBuffer(sku, product) {
   img.height = (IMG_EXPORT_WIDTH / img.naturalWidth) * img.naturalHeight;
 }
 
-const copyHTMLToClipboard = (html) => {
-  const callback = (e) => {
-    e.clipboardData.setData('text/html', html);
-    e.clipboardData.setData('text/plain', html);
-    e.preventDefault();
-  };
-
-  document.addEventListener('copy', callback);
-  document.execCommand('copy');
-  document.removeEventListener('copy', callback);
+const copyHTMLToClipboard = async (html) => {
+  await navigator.clipboard.write([
+    new ClipboardItem({
+        'text/plain': new Blob([ html ], { type: 'text/plain' }),
+        'text/html': new Blob([ html ], { type: 'text/html' }),
+    }),
+]);
 };
 
 const clear = () => {
@@ -93,7 +90,7 @@ const clear = () => {
   tbody.innerHTML = '';
 }
 
-const copy = () => {
+const copy = async () => {
 
   clear();
 
@@ -113,7 +110,7 @@ const copy = () => {
   }
 
   const div = document.getElementById('copybuffer');
-  copyHTMLToClipboard(div.innerHTML);
+  await copyHTMLToClipboard(div.innerHTML);
 }
 
 async function getProductData(sku) {
