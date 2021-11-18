@@ -20,7 +20,6 @@
 .hero h1, h2 {
     z-index: 2;
     position: relative;
-    background: #FFF;
     padding: 6px 24px;
     margin: 0;
     flex: 1 1 auto;
@@ -39,4 +38,9 @@
     object-fit: cover;
     width: 100%;
     height: 100%;
+}
+
+.hero p:not(:first-of-type) {
+    position: relative;
+    padding: 6px 24px;
 }

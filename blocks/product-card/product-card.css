@@ -1,7 +1,6 @@
 main .product-card-container {
     background-color: #f1f3f4;
     padding-top: 16px;
-    max-width: 870px !important;
 }
 
 main .product-card {
