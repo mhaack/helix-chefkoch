@@ -149,9 +149,12 @@ async function getProductData(sku) {
     const product = json?.data?.products?.items[0];
     if (product) {
       return {
-        name: product.name,
-        imgSrc: product.thumbnail.url,
-      }
+          name: product.name,
+          imgSrc: product.thumbnail.url.replace(
+              'http://',
+              'https://'
+          )
+      };
     }
   } 
 
