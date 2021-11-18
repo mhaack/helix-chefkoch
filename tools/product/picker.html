@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="spectrum spectrum--medium spectrum--light">
 
 <head>
     <meta charset="utf-8" />
@@ -10,6 +10,19 @@
         .react-spectrum-provider {
             margin: 50px;
         }
+
+        .hidden {
+            display: none;
+        }
+
+        .offscreen {
+            position: absolute;
+            top: -1000px;
+        }
+
+        .image-preview {
+            max-height: 40px;
+        }
     </style>
 </head>
 
@@ -17,8 +30,26 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <product-field name="./product" placeholder="Product SKU" selection-id="combinedSku" multiple
-        filter="folderOrProductOrVariant" aria-required="true" configs="<%= configs %>">
+        filter="folderOrProductOrVariant" aria-required="true" configs="<%= configs %>" target="#products">
     </product-field>
+
+    <div id="products" style="display: none;" class="react-spectrum-provider">
+        <h2 class="spectrum-Heading spectrum-Heading--sizeM">Selected Products</h2>
+        <table class="spectrum-Table" style="border: 1px solid black;">
+            <thead class="spectrum-Table-head">
+                <tr>
+                    <th class="spectrum-Table-headCell">Product SKU</th>
+                    <th class="spectrum-Table-headCell">Product Name</th>
+                    <th class="spectrum-Table-headCell">Image</th>
+                </tr>
+            </thead>
+            <tbody class="spectrum-Table-body">
+            </tbody>
+        </table>
+        <br>
+        <button id="copy" class="hidden spectrum-Button spectrum-Button--cta">Copy</button>
+    </div>
+
     <script type="application/javascript">
         let configs = [];
         configs.push({ "instanceUrl": "https://adobeioruntime.net/api/v1/web/mbecker/default/io-proxy.http/graphql", "rootCategory": "Mg==", "storeView": "default", "enableUIDSupport": "true" });
@@ -27,6 +58,22 @@
 
     <script type="application/javascript" crossorigin async="true"
         src="https://static-cif.adobeaemcloud.com/src.stable.latest.js"></script>
+
+    <script type="module">
+        import { init } from './picker.js';
+        init();
+    </script>
+
+    <div class="hidden" id="copybuffer">
+        <table cellpadding="0" cellspacing="0" style="border: 1px solid black; border-spacing: 0; width: 100%">
+            <thead>
+                <tr>
+                <th style="border: 1px solid black; background-color: rgb(211, 211, 211);" colspan="3" id="blockName"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </body>
 
 </html>

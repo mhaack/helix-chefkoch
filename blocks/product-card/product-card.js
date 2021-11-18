@@ -16,9 +16,8 @@ import { loadProducts } from '../../scripts/commerce.js';
 
 export default function decorate($block) {
     $block.querySelectorAll(':scope>div').forEach(($producdCard) => {
-        const sku = $producdCard.firstElementChild.innerText;
-        $producdCard = $producdCard.parentElement;
-        $producdCard.removeChild($producdCard.firstElementChild);
+        const sku = $producdCard.firstElementChild.nextElementSibling.textContent;
+        $producdCard.innerHTML = '';
 
         // get product data
         loadProducts(sku).then((product) => {
