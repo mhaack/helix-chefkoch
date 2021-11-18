@@ -11,8 +11,12 @@
  */
 /* global */
 
-import { createTag, formatPrice } from '../../scripts/helpers.js';
-import { loadProducts } from '../../scripts/commerce.js';
+import {
+    loadProducts,
+    loadProductMappings,
+    getProductPageUrl,
+    createProductCard
+} from '../../scripts/commerce.js';
 
 export default function decorate($block) {
     const productSkus = [];
@@ -20,35 +24,18 @@ export default function decorate($block) {
     $block.querySelectorAll(':scope>div').forEach(($producdCard) => {
         $producdCard.classList.add('product-card');
 
-        const sku = $producdCard.firstElementChild.nextElementSibling.textContent;
+        const sku =
+            $producdCard.firstElementChild.nextElementSibling.textContent;
         productSkus.push(sku);
 
         $producdCard.remove();
     });
 
-    loadProducts(productSkus).then((products) =>
-        products.forEach((product) => {
-            const $producdCard = createTag('div', { class: 'product-card' });
-            $block.appendChild($producdCard);
-
-            const $imageDiv = createTag('div', { class: 'card-image' });
-            const image = product.thumbnail;
-            const $productImage = createTag('img', {
-                src: image.url,
-                alt: image.label
+    loadProducts(productSkus).then((products) => {
+        loadProductMappings().then((mappings) => {
+            products.forEach((product) => {
+                $block.appendChild(createProductCard(product, getProductPageUrl(product, mappings)));
             });
-            $imageDiv.appendChild($productImage);
-            $producdCard.appendChild($imageDiv);
-
-            const $contentDiv = createTag('div', { class: 'card-content' });
-            const $productName = createTag('h2', { class: 'name' });
-            $productName.innerText = product.name;
-            $contentDiv.appendChild($productName);
-            const $productPrice = createTag('p', { class: 'price' });
-            const price = product.price_range.minimum_price.final_price;
-            $productPrice.innerText = formatPrice(price.value, price.currency);
-            $contentDiv.appendChild($productPrice);
-            $producdCard.appendChild($contentDiv);
-        })
-    );
+        });
+    });
 }
