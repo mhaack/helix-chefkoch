@@ -55,8 +55,9 @@ export default function decorate($block) {
         if (productIdentifier.urlKey) {
             loadProductsByUrlKey(productIdentifier.urlKey).then(
                 (product) =>
-                    ($containerBlock.innerHTML =
-                        renderProductDetailTemplate(product))
+                    ($containerBlock.innerHTML = renderProductDetailTemplate(
+                        Array.isArray(product) ? product[0] : product
+                    ))
             );
         } else {
             loadProductsBySku(productIdentifier.sku).then(
