@@ -8,21 +8,39 @@ function createTag(name, attrs) {
   return el;
 }
 
-let copyButton;
+let copyDetailButton;
+let copyTeaserButton;
+let copyGridButton;
 const selection = {
   items: {},
   count: 0,
 };
+
+function refreshButtons() {
+  if (selection.count > 0) {
+    if (selection.count > 1) {
+      copyGridButton.classList.remove('hidden');
+      copyDetailButton.classList.add('hidden');
+      copyTeaserButton.classList.add('hidden');
+    } else {
+      copyGridButton.classList.add('hidden');
+      copyDetailButton.classList.remove('hidden');
+      copyTeaserButton.classList.remove('hidden');
+    }
+  } else {
+    copyGridButton.classList.add('hidden');
+    copyDetailButton.classList.add('hidden');
+    copyTeaserButton.classList.add('hidden');
+  }
+}
 
 function addToSelection(sku, product) {
   if (!selection.items[sku]) {
     selection.items[sku] = product;
     selection.count += 1;
   }
+  refreshButtons();
 
-  if (selection.count > 0) {
-    copyButton.classList.remove('hidden');
-  }
 }
 
 function removeFromSelection(sku) {
@@ -31,9 +49,7 @@ function removeFromSelection(sku) {
     selection.count -= 1;
   }
 
-  if (selection.count < 1) {
-    copyButton.classList.add('hidden');
-  }
+  refreshButtons();
 }
 
 function addToPreview(sku, product) {
@@ -117,18 +133,11 @@ const clear = () => {
   tbody.innerHTML = '';
 }
 
-const copy = async () => {
+const copy = async (blockName) => {
 
   clear();
 
   if (selection.count === 0) return;
-
-  // 1 product -> card
-  let blockName = 'Product Teaser';
-  if (selection.count > 1) {
-    // n products -> grid
-    blockName = 'Product Grid';
-  }
 
   document.querySelector('#copybuffer #blockName').innerHTML = blockName;
 
@@ -210,6 +219,10 @@ function handleRemoveValue(event) {
 export function init() {
   document.querySelector('#products').addEventListener('cif:add-value', handleAddValue);
   document.querySelector('#products').addEventListener('cif:remove-value', handleRemoveValue);
-  copyButton = document.querySelector('#copy');
-  copyButton.addEventListener('click', copy);
+  copyDetailButton = document.querySelector('#copyDetail');
+  copyTeaserButton = document.querySelector('#copyTeaser');
+  copyGridButton = document.querySelector('#copyGrid');
+  copyDetailButton.addEventListener('click', () => { copy('Product Detail') });
+  copyTeaserButton.addEventListener('click', () => { copy('Product Teaser') });
+  copyGridButton.addEventListener('click', () => { copy('Product Grid') });
 }
