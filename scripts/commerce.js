@@ -61,15 +61,6 @@ export async function loadProductsBySku(productSkus) {
     return loadProducts(getProductsBySkuQuery(productSkus));
 }
 
-export async function loadProductsByUrlKey(productUrlKeys) {
-    const getProductsByUrlKeyQuery = (urlKeys) =>
-        `query { products(filter: { url_key: {in: ${JSON.stringify(
-            urlKeys
-        )} } }) { items { __typename name sku url_key price_range { minimum_price { final_price { currency value } } } thumbnail { url label } } } }`;
-
-    return loadProducts(getProductsByUrlKeyQuery(productUrlKeys));
-}
-
 export async function loadProductMappings() {
     const options = {
         headers: {

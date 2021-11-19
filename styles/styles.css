@@ -1,18 +1,20 @@
+@import url('colors.css');
+
 * {
     box-sizing: border-box;
 }
 
 body {
-    background: #EFEFEF;
+    background: #efefef;
     font-family: 'adobe clean';
     margin: 0;
 }
 h2 {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 main .section-wrapper:not(.hero-container) {
-  width: 80vw;
-  max-width: 600px;
-  margin: 0 auto;
+    width: 80vw;
+    max-width: 600px;
+    margin: 0 auto;
 }
