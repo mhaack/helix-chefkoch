@@ -15,7 +15,6 @@
 (() => {
   window.hlx.initSidekick({
     project: 'helix-chefkoch',
-    outerHost: 'helix-chefkoch--mhaack.hlx.live',
     hlx3: true,
     plugins: [
       // TEMPLATES --------------------------------------------------------------------
