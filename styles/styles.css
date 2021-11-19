@@ -1,61 +1,8 @@
+@import url('colors.css');
+
 /* above the fold CSS goes here */
 
 /* default content */
-
-:root {
-  --color-white: #FFF;
-  --color-gray-100: #F8F8F8;
-  --color-gray-200: #E8E8E8;
-  --color-gray-300: #D4D4D4;
-  --color-gray-400: #B6B6B6;
-  --color-gray-500: #909090;
-  --color-gray-600: #686868;
-  --color-gray-700: #444;
-  --color-gray-800: #242424;
-  --color-black: #000;
-  --color-brand-title: #000B1D;
-  --color-info-accent: #5C5CE0;
-  --color-info-accent-hover: #4646C6;
-  --color-info-accent-down: #3D3DB4;
-  --color-info-accent-light: #DEDEF9;
-
-  /* body */
-  --body-background-color: var(--color-white);
-  --body-alt-background-color: var(--color-gray-600);
-  --body-font-family: 'adobe-clean', 'Trebuchet MS', sans-serif;
-  --body-font-weight: 300;
-  --body-color: var(--color-black);
-  --body-line-height: 1.5;
-  --body-font-size-xxl: 1.75rem; /* 28px */
-  --body-font-size-xl: 1.375rem; /* 22px */
-  --body-font-size-l: 1.25rem; /* 20px */
-  --body-font-size-m: 1.125rem; /* 18px */
-  --body-font-size-s: 1rem; /* 16px */
-  --body-font-size-xs: 0.875rem; /* 14px */
-  --body-font-size-xxs: 0.75rem; /* 12px */
-
-  /* headings */
-  --heading-font-weight: 700;
-  --heading-color: var(--color-gray-800);
-  --heading-line-height: 1.25;
-  --heading-font-size-xxxl: 5rem; /* 80px */
-  --heading-font-size-xxl: 2.75rem; /* 44px */
-  --heading-font-size-xl: 2.25rem; /* 36px */
-  --heading-font-size-l: 1.75rem; /* 28px */
-  --heading-font-size-m: 1.5rem; /* 24px */
-  --heading-font-size-s: 1.25rem; /* 20px */
-  --heading-font-size-xs: 1.125rem; /* 18px */
-  --heading-font-size-xxs: 0.875rem; /* 14px */
-  
-  /* details */
-  --detail-font-weight: 700;
-  --detail-color: var(--color-gray-600);
-  --detail-line-height: 1.25;
-  --detail-font-size-l: 1.25rem; /* 20px */
-  --detail-font-size-m: 1rem; /* 16px */
-  --detail-font-size-s: 0.75rem; /* 12px */
-}
-
 
 @media (min-width: 900px) {
   :root {

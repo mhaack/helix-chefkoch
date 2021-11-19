@@ -19,27 +19,17 @@ import {
 } from '../../scripts/commerce.js';
 
 export default function decorate($block) {
-    const productSkus = [];
-
     $block.querySelectorAll(':scope>div').forEach(($producdCard) => {
-        $producdCard.classList.add('product-card');
-
         const sku =
             $producdCard.firstElementChild.nextElementSibling.textContent;
-        productSkus.push(sku);
+        $producdCard.innerHTML = '';
 
-        $producdCard.remove();
-    });
-
-    loadProductsBySku(productSkus).then((products) => {
-        loadProductMappings().then((mappings) => {
-            products.forEach((product) => {
-                $block.appendChild(
-                    createProductCard(
-                        product,
-                        getProductPageUrl(product, mappings)
-                    )
-                );
+        loadProductsBySku(sku).then((product) => {
+            loadProductMappings().then((mappings) => {
+                $producdCard.innerHTML = createProductCard(
+                    product,
+                    getProductPageUrl(product, mappings)
+                ).innerHTML;
             });
         });
     });

@@ -12,7 +12,7 @@
 /* global */
 
 import {
-    loadProducts,
+    loadProductsBySku,
     loadProductMappings,
     getProductPageUrl,
 } from '../../scripts/commerce.js';
@@ -59,7 +59,7 @@ export default async function decorate($block) {
         div.firstElementChild.nextElementSibling.textContent;
     div.innerHTML = '';
 
-    const product = await loadProducts(sku);
+    const product = await loadProductsBySku(sku);
     const mappings = await loadProductMappings();
     div.innerHTML = createProductTeaser(
         product,
