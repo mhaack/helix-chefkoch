@@ -1,0 +1,8 @@
+.promo-banner {
+    width: 100%;
+    text-align: center;
+}
+
+.promo-banner * img {
+    height: 450px;
+}
