@@ -24,19 +24,14 @@ export function getProductPageUrl(product, mappings) {
         : PDP_URL_Template + product.url_key;
 }
 
-export async function loadProducts(productSkus) {
-    const getProductsQuery = (skus) =>
-        `query { products(filter: { sku: {in: ${JSON.stringify(
-            productSkus
-        )} } }) { items { __typename name sku url_key price_range { minimum_price { final_price { currency value } } } thumbnail { url label } } } }`;
-
+export async function loadProducts(query) {
     const options = {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
         },
 
-        body: JSON.stringify({ query: getProductsQuery(productSkus) })
+        body: JSON.stringify({ query: query })
     };
 
     const products = await fetch(
@@ -45,8 +40,8 @@ export async function loadProducts(productSkus) {
     )
         .then((res) => res.json())
         .then((data) => {
-            //console.log(data.data.products);
-            return Array.isArray(productSkus) && productSkus.length > 1
+            return Array.isArray(data.data.products.items) &&
+                data.data.products.items.length > 1
                 ? data.data.products.items
                 : data.data.products.items[0];
         })
@@ -55,6 +50,24 @@ export async function loadProducts(productSkus) {
         });
 
     return products;
+}
+
+export async function loadProductsBySku(productSkus) {
+    const getProductsBySkuQuery = (skus) =>
+        `query { products(filter: { sku: {in: ${JSON.stringify(
+            skus
+        )} } }) { items { __typename name sku url_key price_range { minimum_price { final_price { currency value } } } thumbnail { url label } } } }`;
+
+    return loadProducts(getProductsBySkuQuery(productSkus));
+}
+
+export async function loadProductsByUrlKey(productUrlKeys) {
+    const getProductsByUrlKeyQuery = (urlKeys) =>
+        `query { products(filter: { url_key: {in: ${JSON.stringify(
+            urlKeys
+        )} } }) { items { __typename name sku url_key price_range { minimum_price { final_price { currency value } } } thumbnail { url label } } } }`;
+
+    return loadProducts(getProductsByUrlKeyQuery(productUrlKeys));
 }
 
 export async function loadProductMappings() {

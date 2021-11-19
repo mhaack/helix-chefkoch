@@ -12,7 +12,7 @@
 /* global */
 
 import {
-    loadProducts,
+    loadProductsBySku,
     loadProductMappings,
     getProductPageUrl,
     createProductCard
@@ -24,7 +24,7 @@ export default function decorate($block) {
             $producdCard.firstElementChild.nextElementSibling.textContent;
         $producdCard.innerHTML = '';
 
-        loadProducts(sku).then((product) => {
+        loadProductsBySku(sku).then((product) => {
             loadProductMappings().then((mappings) => {
                 $producdCard.innerHTML = createProductCard(
                     product,

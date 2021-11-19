@@ -12,7 +12,7 @@
 /* global */
 
 import {
-    loadProducts,
+    loadProductsBySku,
     loadProductMappings,
     getProductPageUrl,
     createProductCard
@@ -31,10 +31,15 @@ export default function decorate($block) {
         $producdCard.remove();
     });
 
-    loadProducts(productSkus).then((products) => {
+    loadProductsBySku(productSkus).then((products) => {
         loadProductMappings().then((mappings) => {
             products.forEach((product) => {
-                $block.appendChild(createProductCard(product, getProductPageUrl(product, mappings)));
+                $block.appendChild(
+                    createProductCard(
+                        product,
+                        getProductPageUrl(product, mappings)
+                    )
+                );
             });
         });
     });
