@@ -68,7 +68,7 @@ export async function loadProductMappings() {
             'Content-Type': 'application/json'
         }
     };
-    const mappings = await fetch(`/products.json`, options)
+    const mappings = await fetch(`/product-mappings.json`, options)
         .then((res) => res.json())
         .then((data) => {
             return data.data;
