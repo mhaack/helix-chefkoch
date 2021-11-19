@@ -28,7 +28,7 @@ export async function loadProducts(productSkus) {
     const getProductsQuery = (skus) =>
         `query { products(filter: { sku: {in: ${JSON.stringify(
             productSkus
-        )} } }) { items { __typename name sku url_key price_range { minimum_price { final_price { currency value } } } thumbnail { url label } } } }`;
+        )} } }) { items { __typename name sku url_key price_range { minimum_price { final_price { currency value } } } thumbnail { url label } description { html } } } }`;
 
     const options = {
         method: 'post',

@@ -28,6 +28,26 @@ export function loadCSS(href) {
 }
 
 /**
+ * loads a script by adding a script tag to the head.
+ * @param {string} url URL of the js file
+ * @param {Function} callback callback on load
+ * @param {string} type type attribute of script tag
+ * @returns {Element} script element
+ */
+
+ export function loadScript(url, callback, type) {
+  const head = document.querySelector('head');
+  const script = document.createElement('script');
+  script.setAttribute('src', url);
+  if (type) {
+    script.setAttribute('type', type);
+  }
+  head.append(script);
+  script.onload = callback;
+  return script;
+}
+
+/**
  * Retrieves the content of a metadata tag.
  * @param {string} name The metadata name (or property)
  * @returns {string} The metadata value
@@ -375,6 +395,13 @@ export function addFavIcon(href) {
   }
 }
 
+export function makeLinkRelative(href) {
+  const url = new URL(href);
+  const host = url.hostname;
+  if (host.endsWith('.page') || host.endsWith('.live') || host === 'business.adobe.com') return (`${url.pathname}${url.search}${url.hash}`);
+  return (href);
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -423,6 +450,12 @@ async function loadEager(doc) {
  */
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
+
+  /* load gnav */
+  const header = document.querySelector('header');
+  header.setAttribute('data-block-name', 'gnav');
+  header.setAttribute('data-gnav-source', '/gnav');
+  loadBlock(header);
 
   loadBlocks(main);
   loadCSS('/styles/lazy-styles.css');
