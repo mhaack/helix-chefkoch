@@ -1,20 +1,358 @@
 @import url('colors.css');
 
-* {
-    box-sizing: border-box;
+/* above the fold CSS goes here */
+
+/* default content */
+
+@media (min-width: 900px) {
+  :root {
+    --heading-font-size-xxxl: 3.75rem; /* 60px */
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --heading-font-size-xxxl: 2.75rem; /* 44px */
+  }
 }
 
 body {
-    background: #efefef;
-    font-family: 'adobe clean';
-    margin: 0;
-}
-h2 {
-    margin-top: 20px;
+  background-color: var(--body-background-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  color: var(--body-color);
+  margin: 0;
+  padding: 0;
 }
 
-main .section-wrapper:not(.hero-container) {
-    width: 80vw;
+/* buttons */
+
+a.button:any-link {
+  text-decoration: none;
+  border-radius: 2rem;
+  border: 2px solid transparent;
+  padding: 6px 1rem;
+  /* outline: none; (keep outline for a11n) */
+  text-align: center;
+  font-size: var(--body-font-size-s);
+  font-style: normal; 
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-white);
+  background-color: var(--color-info-accent);
+  margin: 16px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+
+a.button:hover, a.button:focus {
+  background-color: var(--color-info-accent-hover);
+}
+
+a.button.small:any-link {
+  padding: 2px .8rem;
+  font-size: var(--body-font-size-xs);
+}
+
+a.button.large:any-link {
+  padding: 8px 1.2rem;
+  font-size: var(--body-font-size-m);
+}
+
+a.button.xlarge:any-link {
+  padding: 10px 1.4rem;
+  font-size: var(--body-font-size-l);
+}
+
+a.button.primary:any-link {
+  background-color: var(--color-gray-700);
+}
+
+a.button.primary:hover, a.button.primary:focus {
+  background-color: var(--color-gray-800);
+}
+
+a.button.secondary:any-link {
+  background-color: var(--color-gray-600);
+}
+
+a.button.secondary:hover, a.button.secondary:focus {
+  background-color: var(--color-gray-700);
+}
+
+a.button.light:any-link {
+  background-color: transparent;
+  color: var(--color-info-accent);
+  border: solid 2px var(--color-info-accent);
+}
+
+a.button.light:hover, a.button.light:focus {
+  background-color: var(--color-info-accent-hover);
+  color: var(--color-white);
+}
+
+a.button.primary.light:any-link {
+  color: var(--color-gray-700);
+  border-color: var(--color-gray-700);
+}
+
+a.button.primary.light:hover, a.button.primary.light:focus {
+  background-color: var(--color-gray-800);
+  border-color: var(--color-gray-800);
+  color: var(--color-white);
+}
+
+a.button.secondary.light:any-link {
+  color: var(--color-gray-600);
+  border-color: var(--color-gray-600);
+}
+
+a.button.secondary.light:hover, a.button.secondary.light:focus {
+  background-color: var(--color-gray-700);
+  border-color: var(--color-gray-700);
+  color: var(--color-white);
+}
+
+a.button > svg {
+  float: left;
+  display: inline;
+  width: 20px;
+  height: 20px;
+  margin: 8px 8px 8px 0;
+  fill: currentColor;
+  color: currentColor;
+}
+
+a.button > svg > use {
+  fill: currentColor;
+  color: currentColor;
+}
+
+/* headings and body */
+
+main {
+  font-size: var(--body-font-size-m);
+  line-height: var(--body-line-height);
+  margin: 64px 0 0 0;
+  font-weight: var(--body-font-weight);
+}
+
+main p:not(:last-of-type) {
+  margin-bottom: 32px;
+}
+
+main h1, main h2, main h3, main h4, main h5, main h6 {
+  font-weight: var(--heading-font-weight);
+  line-height: var(--heading-line-height);
+  margin-top: 48px;
+  margin-bottom: 16px;
+}
+
+main h1 {
+  font-size: var(--heading-font-size-xl);
+}
+
+main h2 {
+  font-size: var(--heading-font-size-l);
+}
+
+main h3 {
+  font-size: var(--heading-font-size-m);
+}
+
+main h4 {
+  font-size: var(--heading-font-size-s);
+}
+
+main h5, main h6 {
+  font-size: var(--heading-font-size-xs);
+}
+
+main h1.hidden {
+  display: none;
+}
+
+@media (min-width:600px) {
+  main {
+    font-size: var(--body-font-size-l);
+  }
+
+  main h2 {
+    font-size: var(--heading-font-size-l);
+  }
+
+  main h3 {
+    font-size: var(--heading-font-size-l);
+  }
+
+  main h4 {
+    font-size: var(--heading-font-size-m);
+  }
+}
+
+/* links */
+
+main a:any-link {
+  color: var(--body-color);
+  line-height: var(--body-line-height);
+}
+
+main a.cta-link {
+  color: var(--color-info-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+main a.cta-link:after {
+  content: " >";
+}
+
+main a.cta-link:hover {
+  color: var(--color-info-accent-hover);
+}
+
+main a.cta-link:active,
+main a.cta-link:focus {
+  color: var(--color-info-accent-down);
+}
+
+main img,
+main video {
+  max-width: 100%;
+}
+
+/* section wrapper */
+
+main .section-wrapper {
+  margin-top: 64px;
+}
+
+main .section-wrapper:first-of-type {
+  padding-top: 0;
+}
+
+main .section-wrapper:last-of-type {
+  margin-bottom: 0;
+}
+
+main .section-wrapper:first-of-type {
+  padding: 0;
+}
+
+@media (min-width:600px) {
+  main .section-wrapper > div {
+    max-width: unset;
+  }
+}
+
+main .section-wrapper > div:empty {
+  padding: 0;
+}
+
+main .section-wrapper > div {
+  margin: auto;
+  padding: 0 2rem;
+}
+
+@media (min-width: 700px) {
+  main .section-wrapper > div {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  main .section-wrapper > div > :not(div) {
     max-width: 600px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+main .section-wrapper p.button-container {
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+/* gnav placeholder */
+
+header {
+  display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 65px;
+  background-color: var(--color-white);
+  z-index: 3;
+}
+
+/* caption styling */
+
+main .figure {
+  margin: 0;
+}
+
+main .figure .caption {
+  margin-top: 16px !important;
+  text-align: left;
+  font-style: italic;
+  font-size: var(--body-font-size-xs);
+  color: var(--color-gray-700);
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 700px) {
+  main .figure .caption {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* CLS and FOUC protection for lazy loaded content/styles */
+
+header .gnav,
+main .recommended-articles,
+main .featured-article,
+main .article-feed,
+main .article-header,
+main .tag-header-container,
+main .recommended-articles-small-container {
+  visibility: hidden;
+}
+
+main .featured-article {
+  min-height: 320px;
+  margin-bottom: 24px;
+}
+
+main .featured-article-container > div {
+  padding: 0;
+}
+
+main .featured-article-container div h1 {
+  padding: 0 1.6rem;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  main .featured-article-container div h1 {
+    text-align: left;
+    max-width: 800px;
+  }
+}
+
+main .article-feed {
+  min-height: 900px;  
+}
+
+body {
+  visibility: hidden;
+}
+
+body.appear {
+  visibility: unset;
 }

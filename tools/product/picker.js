@@ -124,7 +124,7 @@ const copy = async () => {
   if (selection.count === 0) return;
 
   // 1 product -> card
-  let blockName = 'Product Card';
+  let blockName = 'Product Teaser';
   if (selection.count > 1) {
     // n products -> grid
     blockName = 'Product Grid';

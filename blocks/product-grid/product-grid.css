@@ -15,3 +15,105 @@ main .product-grid {
     justify-content: center;
   }
 }
+
+main .product-grid .product-card {
+  background-color: #fff;
+  width: 344px;
+  margin: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+
+
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.3s;
+
+  --scale-x: 1;
+  --scale-y: 1;
+  transform: translateX(0) translateY(0) rotate(0) skewX(0) skewY(0) scaleX(var(--scale-x)) scaleY(var(--scale-y));
+}
+
+main .product-grid .product-card:hover {
+  --scale-x: 1.05;
+  --scale-y: 1.05;
+}
+
+main .product-grid .product-card .card-image {
+  min-height: 136px;
+}
+
+main .product-grid .product-card .card-image img {
+  border-radius: 20px 20px 0 0;
+  max-width: 100%;
+}
+
+main .product-grid .product-card .card-content {
+  padding: 32px 32px 8px 32px;
+  color: #232323;
+}
+
+main .product-grid .product-card .card-content h2 {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+main .product-grid .product-card .card-content p {
+  text-align: center;
+  margin-top: 0;
+}
+
+main .product-grid .product-card.dark .card {
+  background-color: #000;
+}
+
+main .product-grid .product-card a {
+  text-decoration: none;
+}
+
+main .cards.dark .card .card-content {
+  color: #fff;
+}
+
+main .cards.dark .card .card-image {
+  background-color: #343434;
+}
+
+@media (min-width: 900px) {
+  main .cards-container {
+      background-color: unset;
+  }
+
+  main .cards {
+      max-width: 1024px;
+      width: unset;
+      padding: 0;
+      margin: 80px auto;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+  }
+
+  main .product-grid .product-card {
+      width: 248px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px 2px rgba(102, 102, 102, 0.1);
+      margin: 20px;
+  }
+
+  main .product-grid .product-card .card-content {
+      padding: 16px 16px 8px 16px;
+  }
+
+  main .product-grid .product-card .card-content h2 {
+      text-align: center;
+      font-size: 1.25rem;
+      line-height: 1.2;
+      margin-bottom: 8px;
+  }
+
+  main .product-grid .product-card .card-content p,
+  main .product-grid .product-card .card-content li {
+      font-size: 0.9rem;
+  }
+}

@@ -24,6 +24,15 @@ export function getProductPageUrl(product, mappings) {
         : PDP_URL_Template + product.url_key;
 }
 
+export async function loadProductsBySku(productSkus) {
+    const getProductsBySkuQuery = (skus) =>
+        `query { products(filter: { sku: {in: ${JSON.stringify(
+            skus
+        )} } }) { items { __typename name sku url_key price_range { minimum_price { final_price { currency value } } } thumbnail { url label } description { html } } } }`;
+
+    return loadProducts(getProductsBySkuQuery(productSkus));
+}
+
 export async function loadProducts(query) {
     const options = {
         method: 'post',
@@ -40,6 +49,7 @@ export async function loadProducts(query) {
     )
         .then((res) => res.json())
         .then((data) => {
+            //console.log(data.data.products);
             return Array.isArray(data.data.products.items) &&
                 data.data.products.items.length > 1
                 ? data.data.products.items
@@ -50,15 +60,6 @@ export async function loadProducts(query) {
         });
 
     return products;
-}
-
-export async function loadProductsBySku(productSkus) {
-    const getProductsBySkuQuery = (skus) =>
-        `query { products(filter: { sku: {in: ${JSON.stringify(
-            skus
-        )} } }) { items { __typename name sku url_key price_range { minimum_price { final_price { currency value } } } thumbnail { url label } } } }`;
-
-    return loadProducts(getProductsBySkuQuery(productSkus));
 }
 
 export async function loadProductMappings() {
