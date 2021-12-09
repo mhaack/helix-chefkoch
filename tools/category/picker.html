@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class="spectrum spectrum--medium spectrum--light">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Commerce Category Picker</title>
+    <link rel="stylesheet" type="text/css" crossorigin
+        href="https://static-cif.adobeaemcloud.com/src.stable.latest.css" />
+    <style type="text/css">
+        .react-spectrum-provider {
+            margin: 50px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .offscreen {
+            position: absolute;
+            top: -1000px;
+        }
+
+        .image-preview {
+            max-height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <category-field name="./category" placeholder="Category" selection-id="urlPath" multiple
+        aria-required="true" configs="<%= configs %>" target="#categories">
+    </category-field>
+
+    <div id="categories" style="display: none;" class="react-spectrum-provider">
+        <h2 class="spectrum-Heading spectrum-Heading--sizeM">Selected Categories</h2>
+        <table class="spectrum-Table" style="border: 1px solid black;">
+            <thead class="spectrum-Table-head">
+                <tr>
+                    <th class="spectrum-Table-headCell">Category Name</th>
+                    <th class="spectrum-Table-headCell">Image</th>
+                    <th class="spectrum-Table-headCell">URL Path</th>
+                </tr>
+            </thead>
+            <tbody class="spectrum-Table-body">
+            </tbody>
+        </table>
+        <br>
+        <button id="copyTeaser" class="hidden spectrum-Button spectrum-Button--cta">Copy as Featured Categories Block</button>
+    </div>
+
+    <script type="application/javascript">
+        let configs = [];
+        configs.push({ "instanceUrl": "https://adobeioruntime.net/api/v1/web/mbecker/default/io-proxy.http/graphql", "rootCategory": "Mg==", "storeView": "default", "enableUIDSupport": "true" });
+        document.getElementsByTagName("category-field")[0].setAttribute("configs", JSON.stringify(configs))
+    </script>
+
+    <script type="application/javascript" crossorigin async="true"
+        src="https://static-cif.adobeaemcloud.com/src.stable.latest.js"></script>
+
+    <script type="module">
+        import { init } from './picker.js';
+        init();
+    </script>
+
+    <div class="hidden" id="copybuffer">
+        <table cellpadding="0" cellspacing="0" style="border: 1px solid black; border-spacing: 0; width: 100%">
+            <thead>
+                <tr>
+                <th style="border: 1px solid black; background-color: rgb(211, 211, 211);" colspan="4" id="blockName"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</body>
+
+</html>

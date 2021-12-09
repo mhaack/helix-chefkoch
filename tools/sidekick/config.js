@@ -14,21 +14,38 @@
 // This file contains the project-specific configuration for the sidekick.
 (() => {
   window.hlx.initSidekick({
-    project: 'helix-chefkoch',
-    hlx3: true,
-    plugins: [
-      // TEMPLATES --------------------------------------------------------------------
-      {
-        id: 'picker',
-        condition: (s) => s.isEditor(),
-        button: {
-          text: 'Product picker',
-          action: (_, s) => {
-            const { config } = s;
-            window.open(`https://${config.innerHost}/tools/product/picker.html`, 'hlx-sidekick-product-picker');
+      project: 'helix-chefkoch',
+      hlx3: true,
+      plugins: [
+          // TEMPLATES --------------------------------------------------------------------
+          {
+              id: 'product-picker',
+              condition: (s) => s.isEditor(),
+              button: {
+                  text: 'Product picker',
+                  action: (_, s) => {
+                      const { config } = s;
+                      window.open(
+                          `https://${config.innerHost}/tools/product/picker.html`,
+                          'hlx-sidekick-product-picker'
+                      );
+                  }
+              }
           },
-        },
-      },
-    ],
+          {
+              id: 'category-picker',
+              condition: (s) => s.isEditor(),
+              button: {
+                  text: 'Category picker',
+                  action: (_, s) => {
+                      const { config } = s;
+                      window.open(
+                          `https://${config.innerHost}/tools/category/picker.html`,
+                          'hlx-sidekick-category-picker'
+                      );
+                  }
+              }
+          }
+      ]
   });
 })();
