@@ -7,7 +7,7 @@ indices:
       - '/venia-helix/blogs/**'
     exclude:
       - '**/Document.*'
-    target: /query-index
+    target: /venia-helix/blogs/query-index
     properties:
       author:
         select: head > meta[name="author"]
